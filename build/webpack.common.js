@@ -9,7 +9,7 @@ module.exports = {
   output: {
     publicPath: '/',
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, '../dist')
   },
   module: {
     rules: [
@@ -64,5 +64,28 @@ module.exports = {
       template: 'src/index.html'
     }),
     new CleanWebpackPlugin(),
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      chunks: "async",
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10
+        },
+        default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true
+        }
+      }
+    }
+  }
 }
