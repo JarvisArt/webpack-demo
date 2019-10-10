@@ -5,9 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle": "webpack",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server",
+    "dev": "webpack-dev-server --config ./build/webpack.dev.js",
+    "build": "webpack --config ./build/webpack.prod.js",
     "server": "node server.js"
   },
   "author": "",
@@ -39,7 +38,8 @@
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-middleware": "^3.7.2",
-    "webpack-dev-server": "^3.8.2"
+    "webpack-dev-server": "^3.8.2",
+    "webpack-merge": "^4.2.2"
   },
   "browserslist": [
     "defaults",

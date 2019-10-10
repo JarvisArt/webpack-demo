@@ -1,20 +1,15 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path')
-const webpack = require('webpack');
 
 module.exports = {
-  mode: 'development', // development 或 production
-  devtool: 'cheap-module-eval-source-map',
   entry: {
     main: './src/index.js',
   },
-  devServer: {
-    contentBase: './dist',
-    open: true,
-    port: 8080,
-    hot: true,
-    hotOnly: true
+  output: {
+    publicPath: '/',
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
@@ -64,19 +59,10 @@ module.exports = {
       }
     ]
   },
-  output: {
-    publicPath: '/',
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     }),
     new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  optimization: {
-    usedExports: true
-  }
+  ]
 }
