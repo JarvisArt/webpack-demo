@@ -1,4 +1,6 @@
-import './style.css';
-import './style1.css';
+import _ from 'loadsh';
+import $ from 'jquery';
 
-console.log('hello')
+const dom = $('<div>');
+dom.html(_.join(['Jarvis', 'Art', 'to'], '-'));
+$('body').append(dom)

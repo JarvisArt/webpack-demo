@@ -6,12 +6,6 @@ module.exports = {
   entry: {
     main: './src/index.js',
   },
-  output: {
-    publicPath: '/',
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js',
-    path: path.resolve(__dirname, '../dist')
-  },
   module: {
     rules: [
       {
@@ -45,9 +39,17 @@ module.exports = {
     new CleanWebpackPlugin(),
   ],
   optimization: {
+    runtimeChunk: {
+      name: 'runtime'
+    },
     usedExports: true,
     splitChunks: {
       chunks: 'all'
     }
-  }
+  },
+  performance: false,
+  output: {
+    publicPath: '/',
+    path: path.resolve(__dirname, '../dist')
+  },
 }

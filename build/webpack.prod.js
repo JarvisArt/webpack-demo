@@ -45,6 +45,10 @@ const prodConfig = {
       // ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
   ],
+  output: {
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[name].[contenthash].js',
+  }
 }
 
 module.exports = merge(commonConfig, prodConfig);
