@@ -1,18 +1,47 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
 const path = require('path')
+const fs = require('fs');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const devConfig = require('./webpack.dev');
 const prodConfig = require('./webpack.prod');
+
+const plugins = [
+  new HtmlWebpackPlugin({
+    template: 'src/index.html'
+  }),
+  new CleanWebpackPlugin()
+]
+
+const files = fs.readdirSync(path.resolve(__dirname, '../dll/'))
+files.forEach(file => {
+  if(/.*\.dll.js/.test(file)) {
+    plugins.push(new AddAssetHtmlWebpackPlugin({
+      filepath: path.resolve(__dirname, '../dll', file)
+    }))
+  }
+  if(/.*\.manifest.json/.test(file)) {
+    plugins.push(new webpack.DllReferencePlugin({
+      manifest: path.resolve(__dirname, '../dll', file)
+    }))
+  }
+})
+
 const commonConfig = {
   entry: {
     main: './src/index.js',
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
+        test: /\.jsx?$/,
+        // exclude: /node_modules/,
+        include: path.resolve(__dirname, '../src'),
         use: [
           { loader: "babel-loader" },
         ]
@@ -36,12 +65,7 @@ const commonConfig = {
       },
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    }),
-    new CleanWebpackPlugin(),
-  ],
+  plugins,
   optimization: {
     runtimeChunk: {
       name: 'runtime'
