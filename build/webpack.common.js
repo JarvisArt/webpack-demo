@@ -1,5 +1,3 @@
-
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path')
@@ -17,7 +15,6 @@ const commonConfig = {
         exclude: /node_modules/,
         use: [
           { loader: "babel-loader" },
-          { loader: "imports-loader?this=>window" }
         ]
       },
       {
@@ -44,10 +41,6 @@ const commonConfig = {
       template: 'src/index.html'
     }),
     new CleanWebpackPlugin(),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      _join: ['lodash', 'join']
-    })
   ],
   optimization: {
     runtimeChunk: {

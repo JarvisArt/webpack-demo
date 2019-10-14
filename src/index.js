@@ -1,11 +1,12 @@
-// import _ from 'loadsh';
-// import $ from 'jquery';
-// import { ui } from './jquery.ui.js';
+console.log('hello, this i jarvis');
 
-// const dom = $('<div>');
-// dom.html(_.join(['Jarvis', 'Art', 'to'], '-'));
-// $('body').append(dom)
-
-// ui();
-
-console.log(this === window)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service-worker registed');
+      }).catch(error => {
+        console.log('Service-worker registed error');
+      })
+  })
+}
